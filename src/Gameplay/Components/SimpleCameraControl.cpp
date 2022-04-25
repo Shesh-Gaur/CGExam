@@ -83,6 +83,12 @@ void SimpleCameraControl::Update(float deltaTime)
 
 	}
 	_prevMousePos = InputEngine::GetMousePos();
+
+	if (GetGameObject()->GetPosition().y > 45.0f)
+	{
+		GetGameObject()->SetPostion(glm::vec3(1000, 1000, -100));
+		std::cout << "\nYOU WIN!!!!";
+	}
 }
 
 void SimpleCameraControl::RenderImGui()
