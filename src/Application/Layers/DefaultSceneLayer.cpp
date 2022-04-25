@@ -481,7 +481,7 @@ void DefaultSceneLayer::_CreateScene()
 		GameObject::Sptr monkey1 = scene->CreateGameObject("Monkey 1");
 		{
 			// Set position in the scene
-			monkey1->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+			monkey1->SetPostion(glm::vec3(-13.410f, 2.680f, 0.0f));
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey1->Add<RenderComponent>();
@@ -521,7 +521,7 @@ void DefaultSceneLayer::_CreateScene()
 		GameObject::Sptr monkey2 = scene->CreateGameObject("Monkey 2");
 		{
 			// Set position in the scene
-			monkey2->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+			monkey2->SetPostion(glm::vec3(-7.340f, 7.080f, 0.760f));
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey2->Add<RenderComponent>();
@@ -561,7 +561,7 @@ void DefaultSceneLayer::_CreateScene()
 		GameObject::Sptr monkey3 = scene->CreateGameObject("Monkey 3");
 		{
 			// Set position in the scene
-			monkey3->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+			monkey3->SetPostion(glm::vec3(-13.07f, 0.0f, 1.0f));
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey3->Add<RenderComponent>();
@@ -606,7 +606,24 @@ void DefaultSceneLayer::_CreateScene()
 			RenderComponent::Sptr renderer = rocks->Add<RenderComponent>();
 			renderer->SetMesh(rockMesh);
 			renderer->SetMaterial(rockMat);
+			rocks->SetPostion(glm::vec3(-18.29f, 40.0f, 0.00));
+			rocks->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+
 		}
+
+		GameObject::Sptr rocks2 = scene->CreateGameObject("Rocks2");
+		{
+
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = rocks2->Add<RenderComponent>();
+			renderer->SetMesh(rockMesh);
+			renderer->SetMaterial(rockMat);
+			rocks2->SetPostion(glm::vec3(15.04f, 40.0f, 0.00));
+			rocks2->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+		}
+		
+
+
 
 		GameObject::Sptr pillar = scene->CreateGameObject("Pillar");
 		{
@@ -624,6 +641,10 @@ void DefaultSceneLayer::_CreateScene()
 			RenderComponent::Sptr renderer = snake->Add<RenderComponent>();
 			renderer->SetMesh(snakeMesh);
 			renderer->SetMaterial(snakeMat);
+			snake->SetPostion(glm::vec3(-28.080, 23.47,3.09f));
+			snake->SetRotation(glm::vec3(90.0f, 0.0f, -45.0f));
+			snake->SetScale(glm::vec3(0.8f, 0.8f, 0.8f));
+		
 		}
 		GameObject::Sptr pillar2 = scene->CreateGameObject("Pillar");
 		{
@@ -846,16 +867,29 @@ void DefaultSceneLayer::_CreateScene()
 		//	trigger->Add<TriggerVolumeEnterBehaviour>();
 		//}
 
-		//GameObject::Sptr shadowCaster = scene->CreateGameObject("Shadow Light");
-		//{
+		GameObject::Sptr shadowCaster = scene->CreateGameObject("Shadow Light");
+		{
 		//	// Set position in the scene
-			//shadowCaster->SetPostion(glm::vec3(3.0f, 3.0f, 5.0f));
-			//shadowCaster->LookAt(glm::vec3(0.0f));
+			shadowCaster->SetPostion(glm::vec3(-31.230f, 37.8f, 5.0f));
+			shadowCaster->LookAt(glm::vec3(0.0f));
+			shadowCaster->SetRotation(glm::vec3(31.317f, 0.0f, -48.0f));
 
 		//	// Create and attach a renderer for the monkey
-		//ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
-		//shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
-		//}
+		ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
+		shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
+		}
+
+		GameObject::Sptr shadowCaster2 = scene->CreateGameObject("Shadow Light2");
+		{
+			//	// Set position in the scene
+			shadowCaster2->SetPostion(glm::vec3(-33.84f, -1.72f, 5.0f));
+			shadowCaster2->LookAt(glm::vec3(0.0f));
+			shadowCaster2->SetRotation(glm::vec3(31.317f, 0.0f, -89.0f));
+
+			//	// Create and attach a renderer for the monkey
+			ShadowCamera::Sptr shadowCam2 = shadowCaster2->Add<ShadowCamera>();
+			shadowCam2->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
+		}
 
 		/////////////////////////// UI //////////////////////////////
 
