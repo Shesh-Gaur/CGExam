@@ -145,6 +145,10 @@ void DefaultSceneLayer::_CreateScene()
 		MeshResource::Sptr shipMesh = ResourceManager::CreateAsset<MeshResource>("fenrir.obj");
 		MeshResource::Sptr rockMesh = ResourceManager::CreateAsset<MeshResource>("RockPile3.obj");
 		MeshResource::Sptr pillarMesh = ResourceManager::CreateAsset<MeshResource>("IntactPillar.obj");
+		MeshResource::Sptr flyerMesh = ResourceManager::CreateAsset<MeshResource>("Flyer.obj");
+		MeshResource::Sptr snakeMesh = ResourceManager::CreateAsset<MeshResource>("Snake.obj");
+
+
 
 		// Load in some textures
 		Texture2D::Sptr    boxTexture = ResourceManager::CreateAsset<Texture2D>("textures/box-diffuse.png");
@@ -352,8 +356,23 @@ void DefaultSceneLayer::_CreateScene()
 			//pillarMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/polka.png"));
 		}
 
+		Material::Sptr enemyMat = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			enemyMat->Name = "Polka";
+			enemyMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/flyerKnight.png"));
+			enemyMat->Set("u_Material.Specular", solidBlackTex);
+			enemyMat->Set("u_Material.NormalMap", normalMapDefault);
+			enemyMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/flyerKnight.png"));
+		}
 
-
+		Material::Sptr snakeMat = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			snakeMat->Name = "Polka";
+			snakeMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/Grid.png"));
+			snakeMat->Set("u_Material.Specular", solidBlackTex);
+			snakeMat->Set("u_Material.NormalMap", normalMapDefault);
+			//snakeMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/flyerKnight.png"));
+		}
 
 		// Create some lights for our scene
 
@@ -457,8 +476,8 @@ void DefaultSceneLayer::_CreateScene()
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey1->Add<RenderComponent>();
-			renderer->SetMesh(monkeyMesh);
-			renderer->SetMaterial(monkeyMaterial);
+			renderer->SetMesh(flyerMesh);
+			renderer->SetMaterial(enemyMat);
 
 			RigidBody::Sptr rb = monkey1->Add<RigidBody>();
 			rb->SetType(RigidBodyType::Dynamic);
@@ -511,7 +530,13 @@ void DefaultSceneLayer::_CreateScene()
 			renderer->SetMaterial(pillarMat);
 		}
 
-
+		GameObject::Sptr snake = scene->CreateGameObject("Snake");
+		{
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = snake->Add<RenderComponent>();
+			renderer->SetMesh(snakeMesh);
+			renderer->SetMaterial(snakeMat);
+		}
 
 		//GameObject::Sptr ship = scene->CreateGameObject("Fenrir");
 		//{
