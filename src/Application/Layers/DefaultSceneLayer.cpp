@@ -374,6 +374,15 @@ void DefaultSceneLayer::_CreateScene()
 			//snakeMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/flyerKnight.png"));
 		}
 
+		Material::Sptr floorMat = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			floorMat->Name = "Polka";
+			floorMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/Grate.png"));
+			floorMat->Set("u_Material.Specular", solidBlackTex);
+			floorMat->Set("u_Material.NormalMap", normalMapDefault);
+			//snakeMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/flyerKnight.png"));
+		}
+
 		// Create some lights for our scene
 
 		GameObject::Sptr light1 = scene->CreateGameObject("Light");
@@ -431,9 +440,9 @@ void DefaultSceneLayer::_CreateScene()
 			// Create and attach a RenderComponent to the object to draw our mesh
 			RenderComponent::Sptr renderer = plane->Add<RenderComponent>();
 			renderer->SetMesh(tiledMesh);
-			renderer->SetMaterial(boxMaterial);
+			renderer->SetMaterial(floorMat);
 
-			// Attach a plane collider that extends infinitely along the X/Y axis
+			// Attach a plane collider that extends infinitely along the X/Y axis 
 			RigidBody::Sptr physics = plane->Add<RigidBody>(/*static by default*/);
 			physics->AddCollider(BoxCollider::Create(glm::vec3(50.0f, 50.0f, 1.0f)))->SetPosition({ 0,0,-1 });
 		}
