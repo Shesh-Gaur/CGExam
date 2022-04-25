@@ -143,6 +143,9 @@ void DefaultSceneLayer::_CreateScene()
 		// Load in the meshes
 		MeshResource::Sptr monkeyMesh = ResourceManager::CreateAsset<MeshResource>("Monkey.obj");
 		MeshResource::Sptr shipMesh = ResourceManager::CreateAsset<MeshResource>("fenrir.obj");
+		MeshResource::Sptr rockMesh = ResourceManager::CreateAsset<MeshResource>("RockPile3.obj");
+		MeshResource::Sptr pillarMesh = ResourceManager::CreateAsset<MeshResource>("IntactPillar.obj");
+
 
 		// Load in some textures
 		Texture2D::Sptr    boxTexture = ResourceManager::CreateAsset<Texture2D>("textures/box-diffuse.png");
@@ -507,9 +510,42 @@ void DefaultSceneLayer::_CreateScene()
 			RenderComponent::Sptr renderer = pillar->Add<RenderComponent>();
 			renderer->SetMesh(pillarMesh);
 			renderer->SetMaterial(pillarMat);
+			pillar->SetPostion(glm::vec3(9.0f, -43.0f, 0.00));
+			pillar->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+		}
+
+		GameObject::Sptr pillar2 = scene->CreateGameObject("Pillar");
+		{
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = pillar2->Add<RenderComponent>();
+			renderer->SetMesh(pillarMesh);
+			renderer->SetMaterial(pillarMat);
+			pillar2->SetPostion(glm::vec3(15.04f, 43.0f, 0.00));
+			pillar2->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
 		}
 
 
+
+		GameObject::Sptr pillar3 = scene->CreateGameObject("Pillar");
+		{
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = pillar3->Add<RenderComponent>();
+			renderer->SetMesh(pillarMesh);
+			renderer->SetMaterial(pillarMat);
+			pillar3->SetPostion(glm::vec3(-18.29f, 43.0f, 0.00));
+			pillar3->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+		}
+
+
+		GameObject::Sptr pillar4 = scene->CreateGameObject("Pillar");
+		{
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = pillar4->Add<RenderComponent>();
+			renderer->SetMesh(pillarMesh);
+			renderer->SetMaterial(pillarMat);
+			pillar4->SetPostion(glm::vec3(-6.0f, -43.0f, 0.00));
+			pillar4->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+		}
 
 		//GameObject::Sptr ship = scene->CreateGameObject("Fenrir");
 		//{
@@ -702,12 +738,12 @@ void DefaultSceneLayer::_CreateScene()
 		//GameObject::Sptr shadowCaster = scene->CreateGameObject("Shadow Light");
 		//{
 		//	// Set position in the scene
-		//	shadowCaster->SetPostion(glm::vec3(3.0f, 3.0f, 5.0f));
-		//	shadowCaster->LookAt(glm::vec3(0.0f));
+			//shadowCaster->SetPostion(glm::vec3(3.0f, 3.0f, 5.0f));
+			//shadowCaster->LookAt(glm::vec3(0.0f));
 
 		//	// Create and attach a renderer for the monkey
-		//	ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
-		//	shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
+		//ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
+		//shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
 		//}
 
 		/////////////////////////// UI //////////////////////////////
