@@ -44,7 +44,7 @@ public:
 	virtual nlohmann::json ToJson() const override;
 	static Enemy::Sptr FromJson(const nlohmann::json& data);
 
-	glm::vec3 playerStartingPos = glm::vec3(-9, 2, 2);
+	glm::vec3 playerStartingPos = glm::vec3(1.793f, -45.300f, 1.0f);
 
 	MAKE_TYPENAME(Enemy);
 };
