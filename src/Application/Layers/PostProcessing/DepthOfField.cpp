@@ -20,7 +20,7 @@ DepthOfField::DepthOfField() :
 
 DepthOfField::~DepthOfField() = default;
 
-void DepthOfField::Apply(const Framebuffer::Sptr& gBuffer)
+void DepthOfField::Apply(const Framebuffer::Sptr & gBuffer)
 {
 	_shader->Bind();
 	gBuffer->BindAttachment(RenderTargetAttachment::Depth, 1);
@@ -32,12 +32,12 @@ void DepthOfField::RenderImGui()
 
 	if (cam != nullptr) {
 		ImGui::DragFloat("Focal Depth", &cam->FocalDepth, 0.1f, 0.1f, 100.0f);
-		ImGui::DragFloat("Lens Dist. ", &cam->LensDepth,  0.01f, 0.001f, 50.0f);
-		ImGui::DragFloat("Aperture   ", &cam->Aperture,   0.1f, 0.1f, 60.0f);
+		ImGui::DragFloat("Lens Dist. ", &cam->LensDepth, 0.01f, 0.001f, 50.0f);
+		ImGui::DragFloat("Aperture   ", &cam->Aperture, 0.1f, 0.1f, 2.0f);
 	}
 }
 
-DepthOfField::Sptr DepthOfField::FromJson(const nlohmann::json& data)
+DepthOfField::Sptr DepthOfField::FromJson(const nlohmann::json & data)
 {
 	DepthOfField::Sptr result = std::make_shared<DepthOfField>();
 	result->Enabled = JsonGet(data, "enabled", true);

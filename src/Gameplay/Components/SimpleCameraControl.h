@@ -1,6 +1,6 @@
 #pragma once
 #include "IComponent.h"
-
+#include "Gameplay/Physics/RigidBody.h"
 struct GLFWwindow;
 
 /// <summary>
@@ -28,6 +28,7 @@ protected:
 	glm::vec3 _moveSpeeds;
 	glm::dvec2 _prevMousePos;
 	glm::vec2 _currentRot;
-
+	bool movementActive = true;
 	bool _isMousePressed = false;
+	bool pressed = false;
 };

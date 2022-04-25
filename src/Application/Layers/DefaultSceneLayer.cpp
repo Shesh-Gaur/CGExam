@@ -361,11 +361,10 @@ void DefaultSceneLayer::_CreateScene()
 			camera->LookAt(glm::vec3(0.0f));
 
 			camera->Add<SimpleCameraControl>();
-
-			// This is now handled by scene itself!
-			//Camera::Sptr cam = camera->Add<Camera>();
-			// Make sure that the camera is set as the scene's main camera!
-			//scene->MainCamera = cam;
+			RigidBody::Sptr rb = camera->Add<RigidBody>();
+			rb->SetType(RigidBodyType::Dynamic);
+			rb->AddCollider(SphereCollider::Create(3.0f));
+			rb->SetLinearDamping(0.0f);
 		}
 
 

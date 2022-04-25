@@ -24,7 +24,7 @@ public:
 	glm::vec3 target;
 
 	//Steering Movement
-	float maxVelocity = 2.0f;
+	float maxVelocity = 4.0f;
 	float maxRotationSpeed = 0.1f;
 	glm::vec3 desiredVelocity;
 	glm::vec3 targetRotation;

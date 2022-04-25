@@ -24,12 +24,12 @@ void Enemy::Awake()
 
 void Enemy::Update(float deltaTime)
 {
-	if (glm::length(player->GetPosition() - GetGameObject()->GetPosition()) < 10.0f)
+	if (glm::length(player->GetPosition() - GetGameObject()->GetPosition()) < 25.0f)
 	{
 		target = player->GetPosition();
 
 		//Kill Player
-		if (glm::length(player->GetPosition() - GetGameObject()->GetPosition()) < 2.5f)
+		if (glm::length(player->GetPosition() - GetGameObject()->GetPosition()) < 5.0f)
 			player->SetPostion(playerStartingPos);
 	}
 
@@ -90,7 +90,13 @@ void Enemy::Steering(float deltaTime)
 	if (Magnitude(newVel) > maxVelocity)
 		newVel = glm::normalize(newVel) * maxVelocity;
 
-	body->SetLinearVelocity(glm::vec3(newVel.x, newVel.y, newVel.z));
+	float boost = 0.0f;
+	if (GetGameObject()->GetPosition().z < target.z)
+	{
+		boost = 0.1f;
+	}
+
+	body->SetLinearVelocity(glm::vec3(newVel.x, newVel.y, newVel.z + boost));
 }
 
 void Enemy::AvoidanceReflect(glm::vec3 dir, float deltaTime)

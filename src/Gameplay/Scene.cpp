@@ -34,7 +34,7 @@ namespace Gameplay {
 		_ambientLight(glm::vec3(0.1f)),
 		_gravity(glm::vec3(0.0f, 0.0f, -9.81f))
 	{
-		GameObject::Sptr mainCam = CreateGameObject("Main Camera");		
+		GameObject::Sptr mainCam = CreateGameObject("Main Camera");
 		MainCamera = mainCam->Add<Camera>();
 
 		_InitPhysics();
@@ -43,7 +43,7 @@ namespace Gameplay {
 
 	Scene::~Scene() {
 		MainCamera = nullptr;
-		DefaultMaterial = nullptr; 
+		DefaultMaterial = nullptr;
 		_skyboxShader = nullptr;
 		_skyboxMesh = nullptr;
 		_skyboxTexture = nullptr;
@@ -113,14 +113,14 @@ namespace Gameplay {
 	GameObject::Sptr Scene::FindObjectByName(const std::string name) const {
 		auto it = std::find_if(_objects.begin(), _objects.end(), [&](const GameObject::Sptr& obj) {
 			return obj->Name == name;
-		});
+			});
 		return it == _objects.end() ? nullptr : *it;
 	}
 
 	GameObject::Sptr Scene::FindObjectByGUID(Guid id) const {
 		auto it = std::find_if(_objects.begin(), _objects.end(), [&](const GameObject::Sptr& obj) {
 			return obj->_guid == id;
-		});
+			});
 		return it == _objects.end() ? nullptr : *it;
 	}
 
@@ -128,7 +128,7 @@ namespace Gameplay {
 		_ambientLight = value;
 	}
 
-	const glm::vec3& Scene::GetAmbientLight() const { 
+	const glm::vec3& Scene::GetAmbientLight() const {
 		return _ambientLight;
 	}
 
@@ -159,10 +159,10 @@ namespace Gameplay {
 	void Scene::DoPhysics(float dt) {
 		_components.Each<Gameplay::Physics::RigidBody>([=](const std::shared_ptr<Gameplay::Physics::RigidBody>& body) {
 			body->PhysicsPreStep(dt);
-		});
+			});
 		_components.Each<Gameplay::Physics::TriggerVolume>([=](const std::shared_ptr<Gameplay::Physics::TriggerVolume>& body) {
 			body->PhysicsPreStep(dt);
-		});
+			});
 
 		if (IsPlaying) {
 
@@ -170,10 +170,10 @@ namespace Gameplay {
 
 			_components.Each<Gameplay::Physics::RigidBody>([=](const std::shared_ptr<Gameplay::Physics::RigidBody>& body) {
 				body->PhysicsPostStep(dt);
-			});
+				});
 			_components.Each<Gameplay::Physics::TriggerVolume>([=](const std::shared_ptr<Gameplay::Physics::TriggerVolume>& body) {
 				body->PhysicsPostStep(dt);
-			});
+				});
 		}
 	}
 
@@ -247,7 +247,7 @@ namespace Gameplay {
 
 		// Create and load camera config
 		result->MainCamera = result->_components.GetComponentByGUID<Camera>(Guid(data["main_camera"]));
-	
+
 		return result;
 	}
 
@@ -367,10 +367,10 @@ namespace Gameplay {
 			_skyboxMesh->Mesh != nullptr &&
 			_skyboxTexture != nullptr &&
 			MainCamera != nullptr) {
-			
+
 			glDepthMask(false);
 			glDisable(GL_CULL_FACE);
-			glDepthFunc(GL_LEQUAL); 
+			glDepthFunc(GL_LEQUAL);
 
 			_skyboxShader->Bind();
 			_skyboxShader->SetUniformMatrix("u_ClippedView", MainCamera->GetProjection());
