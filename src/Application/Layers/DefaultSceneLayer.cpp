@@ -143,8 +143,6 @@ void DefaultSceneLayer::_CreateScene()
 		// Load in the meshes
 		MeshResource::Sptr monkeyMesh = ResourceManager::CreateAsset<MeshResource>("Monkey.obj");
 		MeshResource::Sptr shipMesh = ResourceManager::CreateAsset<MeshResource>("fenrir.obj");
-		MeshResource::Sptr rockMesh = ResourceManager::CreateAsset<MeshResource>("RockPile3.obj");
-		MeshResource::Sptr pillarMesh = ResourceManager::CreateAsset<MeshResource>("IntactPillar.obj");
 
 		// Load in some textures
 		Texture2D::Sptr    boxTexture = ResourceManager::CreateAsset<Texture2D>("textures/box-diffuse.png");
@@ -192,7 +190,7 @@ void DefaultSceneLayer::_CreateScene()
 		toonLut->SetWrap(WrapMode::ClampToEdge);
 
 		// Here we'll load in the cubemap, as well as a special shader to handle drawing the skybox
-		TextureCube::Sptr testCubemap = ResourceManager::CreateAsset<TextureCube>("cubemaps/custom/custom.jpg");
+		TextureCube::Sptr testCubemap = ResourceManager::CreateAsset<TextureCube>("cubemaps/ocean/ocean.jpg");
 		ShaderProgram::Sptr      skyboxShader = ResourceManager::CreateAsset<ShaderProgram>(std::unordered_map<ShaderPartType, std::string>{
 			{ ShaderPartType::Vertex, "shaders/vertex_shaders/skybox_vert.glsl" },
 			{ ShaderPartType::Fragment, "shaders/fragment_shaders/skybox_frag.glsl" }
@@ -333,25 +331,6 @@ void DefaultSceneLayer::_CreateScene()
 			multiTextureMat->Set("u_Scale", 0.1f);
 		}
 
-		Material::Sptr pillarMat = ResourceManager::CreateAsset<Material>(deferredForward);
-		{
-			pillarMat->Name = "Polka";
-			pillarMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/PillarUV.png"));
-			pillarMat->Set("u_Material.Specular", solidBlackTex);
-			pillarMat->Set("u_Material.NormalMap", normalMapDefault);
-			//pillarMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/polka.png"));
-		}
-
-		Material::Sptr rockMat = ResourceManager::CreateAsset<Material>(deferredForward);
-		{
-			rockMat->Name = "Polka";
-			rockMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/Stone.png"));
-			rockMat->Set("u_Material.Specular", solidBlackTex);
-			rockMat->Set("u_Material.NormalMap", ResourceManager::CreateAsset<Texture2D>("textures/stoneNormal.png"));
-			//pillarMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/polka.png"));
-		}
-
-
 		// Create some lights for our scene
 	
 		GameObject::Sptr light1 = scene->CreateGameObject("Light");
@@ -361,7 +340,7 @@ void DefaultSceneLayer::_CreateScene()
 		Light::Sptr lightComponent1 = light1->Add<Light>();
 		lightComponent1->SetColor(glm::vec3(0.0f,1.0f,0.0f));
 		lightComponent1->SetRadius(50.0f);
-		lightComponent1->SetIntensity(548.0f);
+		lightComponent1->SetIntensity(149.0f);
 
 
 		GameObject::Sptr light2 = scene->CreateGameObject("Light2");
@@ -371,27 +350,9 @@ void DefaultSceneLayer::_CreateScene()
 		Light::Sptr lightComponent2 = light2->Add<Light>();
 		lightComponent2->SetColor((glm::vec3(1.0f, 0.0f,0.0f)));
 		lightComponent2->SetRadius(10.0f);
-		lightComponent2->SetIntensity(190.0f);
+		lightComponent2->SetIntensity(50.0f);
 
 
-		GameObject::Sptr light3 = scene->CreateGameObject("Light3");
-		light3->SetPostion(glm::vec3(glm::diskRand(25.0f), 1.0f));
-
-
-		Light::Sptr lightComponent3 = light3->Add<Light>();
-		lightComponent3->SetColor(glm::linearRand(glm::vec3(0.0f), glm::vec3(1.0f)));
-		lightComponent3->SetRadius(glm::linearRand(0.1f, 10.0f));
-		lightComponent3->SetIntensity(glm::linearRand(1.0f, 2.0f));
-
-		GameObject::Sptr light4 = scene->CreateGameObject("Light4");
-		light4->SetPostion(glm::vec3(glm::diskRand(25.0f), 1.0f));
-
-
-		Light::Sptr lightComponent4 = light4->Add<Light>();
-		lightComponent4->SetColor(glm::linearRand(glm::vec3(0.0f), glm::vec3(1.0f)));
-		lightComponent4->SetRadius(glm::linearRand(0.1f, 10.0f));
-		lightComponent4->SetIntensity(glm::linearRand(1.0f, 2.0f));
-		
 
 		// We'll create a mesh that is a simple plane that we can resize later
 		MeshResource::Sptr planeMesh = ResourceManager::CreateAsset<MeshResource>();
@@ -433,25 +394,6 @@ void DefaultSceneLayer::_CreateScene()
 			RigidBody::Sptr physics = plane->Add<RigidBody>(/*static by default*/);
 			physics->AddCollider(BoxCollider::Create(glm::vec3(50.0f, 50.0f, 1.0f)))->SetPosition({ 0,0,-1 });
 		}
-
-		// Set up all our sample objects
-		GameObject::Sptr rocks = scene->CreateGameObject("Rocks");
-		{
-
-			// Create and attach a RenderComponent to the object to draw our mesh
-			RenderComponent::Sptr renderer = rocks->Add<RenderComponent>();
-			renderer->SetMesh(rockMesh);
-			renderer->SetMaterial(rockMat);
-		}
-
-		GameObject::Sptr pillar = scene->CreateGameObject("Pillar");
-		{
-			// Create and attach a RenderComponent to the object to draw our mesh
-			RenderComponent::Sptr renderer = pillar->Add<RenderComponent>();
-			renderer->SetMesh(pillarMesh);
-			renderer->SetMaterial(pillarMat);
-		}
-
 
 		//// Add some walls :3
 		//{
@@ -503,48 +445,6 @@ void DefaultSceneLayer::_CreateScene()
 			GameObject::Sptr particles = scene->CreateGameObject("Particles");
 			{
 				monkey1->AddChild(particles);
-				particles->SetPostion(glm::vec3(0.0f));
-
-				ParticleSystem::Sptr particleManager = particles->Add<ParticleSystem>();
-				particleManager->Atlas = particleTex;
-
-				ParticleSystem::ParticleData emitter;
-				emitter.Type = ParticleType::SphereEmitter;
-				emitter.TexID = 2;
-				emitter.Position = glm::vec3(0.0f);
-				emitter.Color = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-				emitter.Lifetime = 0.0f;
-				emitter.SphereEmitterData.Timer = 1.0f / 50.0f;
-				emitter.SphereEmitterData.Velocity = 0.5f;
-				emitter.SphereEmitterData.LifeRange = { 1.0f, 4.0f };
-				emitter.SphereEmitterData.Radius = 1.0f;
-				emitter.SphereEmitterData.SizeRange = { 0.5f, 1.5f };
-
-				particleManager->AddEmitter(emitter);
-			}
-
-
-		}
-
-		GameObject::Sptr monkey2 = scene->CreateGameObject("Monkey 2");
-		{
-			// Set position in the scene
-			monkey2->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
-
-			// Create and attach a renderer for the monkey
-			RenderComponent::Sptr renderer = monkey2->Add<RenderComponent>();
-			renderer->SetMesh(monkeyMesh);
-			renderer->SetMaterial(monkeyMaterial);
-
-			RigidBody::Sptr rb = monkey2->Add<RigidBody>();
-			rb->SetType(RigidBodyType::Dynamic);
-			rb->AddCollider(SphereCollider::Create(1.05f));
-
-			Enemy::Sptr enemy = monkey2->Add<Enemy>();
-
-			GameObject::Sptr particles = scene->CreateGameObject("Particles");
-			{
-				monkey2->AddChild(particles);
 				particles->SetPostion(glm::vec3(0.0f));
 
 				ParticleSystem::Sptr particleManager = particles->Add<ParticleSystem>();
@@ -756,16 +656,16 @@ void DefaultSceneLayer::_CreateScene()
 		//	trigger->Add<TriggerVolumeEnterBehaviour>();
 		//}
 
-		GameObject::Sptr shadowCaster = scene->CreateGameObject("Shadow Light");
-		{
-			// Set position in the scene
-			shadowCaster->SetPostion(glm::vec3(3.0f, 3.0f, 5.0f));
-			shadowCaster->LookAt(glm::vec3(0.0f));
+		//GameObject::Sptr shadowCaster = scene->CreateGameObject("Shadow Light");
+		//{
+		//	// Set position in the scene
+		//	shadowCaster->SetPostion(glm::vec3(3.0f, 3.0f, 5.0f));
+		//	shadowCaster->LookAt(glm::vec3(0.0f));
 
-			// Create and attach a renderer for the monkey
-			ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
-			shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
-		}
+		//	// Create and attach a renderer for the monkey
+		//	ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
+		//	shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
+		//}
 
 		/////////////////////////// UI //////////////////////////////
 
