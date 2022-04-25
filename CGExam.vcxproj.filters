@@ -340,6 +340,7 @@
       <Filter>Utils\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Gameplay\Components\Enemy.h" />
+    <ClInclude Include="src\Application\Layers\PostProcessing\FilmGrain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp">
@@ -587,5 +588,6 @@
     </ClCompile>
     <ClCompile Include="src\entry_point.cpp" />
     <ClCompile Include="src\Gameplay\Components\Enemy.cpp" />
+    <ClCompile Include="src\Application\Layers\PostProcessing\FilmGrain.cpp" />
   </ItemGroup>
 </Project>

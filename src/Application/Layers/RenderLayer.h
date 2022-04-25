@@ -14,7 +14,7 @@ ENUM_FLAGS(RenderFlags, uint32_t,
 
 class RenderLayer final : public ApplicationLayer {
 public:
-	MAKE_PTRS(RenderLayer); 
+	MAKE_PTRS(RenderLayer);
 
 	// Structure for our frame-level uniforms, matches layout from
 	// fragments/frame_uniforms.glsl
@@ -38,6 +38,8 @@ public:
 		RenderFlags u_RenderFlags;
 		float u_ZNear;
 		float u_ZFar;
+
+		int u_Toggle = 0;
 
 		// NEW FOR DOF
 		// 
@@ -133,6 +135,9 @@ protected:
 	ShaderProgram::Sptr _lightAccumulationShader;
 	ShaderProgram::Sptr _compositingShader;
 	ShaderProgram::Sptr _shadowShader;
+	bool pressed1 = false;
+	bool pressed2 = false;
+	bool pressed3 = false;
 
 	VertexArrayObject::Sptr _fullscreenQuad;
 
@@ -150,7 +155,7 @@ protected:
 	UniformBuffer<LightingUboStruct>::Sptr _lightingUbo;
 
 	void _InitFrameUniforms();
-	void _RenderScene(const glm::mat4& view, const glm::mat4&Projection, const glm::ivec2& screenSize);
+	void _RenderScene(const glm::mat4& view, const glm::mat4& Projection, const glm::ivec2& screenSize);
 
 	void _AccumulateLighting();
 	void _Composite();
