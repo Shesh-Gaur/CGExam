@@ -86,8 +86,14 @@ void SimpleCameraControl::Update(float deltaTime)
 
 	if (GetGameObject()->GetPosition().y > 45.0f)
 	{
-		GetGameObject()->SetPostion(glm::vec3(1000, 1000, -100));
+		GetGameObject()->SetPostion(glm::vec3(1000, 1000, 100));
 		std::cout << "\nYOU WIN!!!!";
+	}
+
+	if (GetGameObject()->GetPosition().z < -10.0f)
+	{
+		GetGameObject()->SetPostion(glm::vec3(0.0f, 0.0f, 5.0f));
+		std::cout << "\nRespawning";
 	}
 }
 
