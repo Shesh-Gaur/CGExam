@@ -481,7 +481,7 @@ void DefaultSceneLayer::_CreateScene()
 		GameObject::Sptr monkey1 = scene->CreateGameObject("Monkey 1");
 		{
 			// Set position in the scene
-			monkey1->SetPostion(glm::vec3(-13.410f, 2.680f, 0.0f));
+			monkey1->SetPostion(glm::vec3(-10.410f, 2.680f, 0.0f));
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey1->Add<RenderComponent>();
@@ -561,7 +561,7 @@ void DefaultSceneLayer::_CreateScene()
 		GameObject::Sptr monkey3 = scene->CreateGameObject("Monkey 3");
 		{
 			// Set position in the scene
-			monkey3->SetPostion(glm::vec3(-13.07f, 0.0f, 1.0f));
+			monkey3->SetPostion(glm::vec3(-16.07f, 0.0f, 1.0f));
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey3->Add<RenderComponent>();
@@ -877,6 +877,7 @@ void DefaultSceneLayer::_CreateScene()
 		//	// Create and attach a renderer for the monkey
 		ShadowCamera::Sptr shadowCam = shadowCaster->Add<ShadowCamera>();
 		shadowCam->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
+		shadowCam->Intensity = 0.25;
 		}
 
 		GameObject::Sptr shadowCaster2 = scene->CreateGameObject("Shadow Light2");
@@ -889,6 +890,8 @@ void DefaultSceneLayer::_CreateScene()
 			//	// Create and attach a renderer for the monkey
 			ShadowCamera::Sptr shadowCam2 = shadowCaster2->Add<ShadowCamera>();
 			shadowCam2->SetProjection(glm::perspective(glm::radians(120.0f), 1.0f, 0.1f, 100.0f));
+			shadowCam2->Intensity = 0.25;
+			
 		}
 
 		/////////////////////////// UI //////////////////////////////
