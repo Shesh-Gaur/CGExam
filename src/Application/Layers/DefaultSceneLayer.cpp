@@ -507,10 +507,87 @@ void DefaultSceneLayer::_CreateScene()
 
 				particleManager->AddEmitter(emitter);
 			}
-
-
 		}
 
+		GameObject::Sptr monkey2 = scene->CreateGameObject("Monkey 2");
+		{
+			// Set position in the scene
+			monkey2->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+
+			// Create and attach a renderer for the monkey
+			RenderComponent::Sptr renderer = monkey2->Add<RenderComponent>();
+			renderer->SetMesh(flyerMesh);
+			renderer->SetMaterial(enemyMat);
+
+			RigidBody::Sptr rb = monkey2->Add<RigidBody>();
+			rb->SetType(RigidBodyType::Dynamic);
+			rb->AddCollider(SphereCollider::Create(1.05f));
+
+			Enemy::Sptr enemy = monkey2->Add<Enemy>();
+
+			GameObject::Sptr particles = scene->CreateGameObject("Particles");
+			{
+				monkey2->AddChild(particles);
+				particles->SetPostion(glm::vec3(0.0f));
+
+				ParticleSystem::Sptr particleManager = particles->Add<ParticleSystem>();
+				particleManager->Atlas = particleTex;
+
+				ParticleSystem::ParticleData emitter;
+				emitter.Type = ParticleType::SphereEmitter;
+				emitter.TexID = 2;
+				emitter.Position = glm::vec3(0.0f);
+				emitter.Color = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+				emitter.Lifetime = 0.0f;
+				emitter.SphereEmitterData.Timer = 1.0f / 50.0f;
+				emitter.SphereEmitterData.Velocity = 0.5f;
+				emitter.SphereEmitterData.LifeRange = { 1.0f, 4.0f };
+				emitter.SphereEmitterData.Radius = 1.0f;
+				emitter.SphereEmitterData.SizeRange = { 0.5f, 1.5f };
+
+				particleManager->AddEmitter(emitter);
+			}
+		}
+
+		GameObject::Sptr monkey3 = scene->CreateGameObject("Monkey 3");
+		{
+			// Set position in the scene
+			monkey3->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+
+			// Create and attach a renderer for the monkey
+			RenderComponent::Sptr renderer = monkey3->Add<RenderComponent>();
+			renderer->SetMesh(flyerMesh);
+			renderer->SetMaterial(enemyMat);
+
+			RigidBody::Sptr rb = monkey3->Add<RigidBody>();
+			rb->SetType(RigidBodyType::Dynamic);
+			rb->AddCollider(SphereCollider::Create(1.05f));
+
+			Enemy::Sptr enemy = monkey3->Add<Enemy>();
+
+			GameObject::Sptr particles = scene->CreateGameObject("Particles");
+			{
+				monkey3->AddChild(particles);
+				particles->SetPostion(glm::vec3(0.0f));
+
+				ParticleSystem::Sptr particleManager = particles->Add<ParticleSystem>();
+				particleManager->Atlas = particleTex;
+
+				ParticleSystem::ParticleData emitter;
+				emitter.Type = ParticleType::SphereEmitter;
+				emitter.TexID = 2;
+				emitter.Position = glm::vec3(0.0f);
+				emitter.Color = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+				emitter.Lifetime = 0.0f;
+				emitter.SphereEmitterData.Timer = 1.0f / 50.0f;
+				emitter.SphereEmitterData.Velocity = 0.5f;
+				emitter.SphereEmitterData.LifeRange = { 1.0f, 4.0f };
+				emitter.SphereEmitterData.Radius = 1.0f;
+				emitter.SphereEmitterData.SizeRange = { 0.5f, 1.5f };
+
+				particleManager->AddEmitter(emitter);
+			}
+		}
 
 		// Set up all our sample objects
 		GameObject::Sptr rocks = scene->CreateGameObject("Rocks");
