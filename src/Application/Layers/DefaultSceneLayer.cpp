@@ -332,18 +332,45 @@ void DefaultSceneLayer::_CreateScene()
 		}
 
 		// Create some lights for our scene
-		GameObject::Sptr lightParent = scene->CreateGameObject("Lights");
+	
+		GameObject::Sptr light1 = scene->CreateGameObject("Light");
+		light1->SetPostion(glm::vec3(-4.74f, 44.94f, 1.0f));
 
-		for (int ix = 0; ix < 50; ix++) {
-			GameObject::Sptr light = scene->CreateGameObject("Light");
-			light->SetPostion(glm::vec3(glm::diskRand(25.0f), 1.0f));
-			lightParent->AddChild(light);
 
-			Light::Sptr lightComponent = light->Add<Light>();
-			lightComponent->SetColor(glm::linearRand(glm::vec3(0.0f), glm::vec3(1.0f)));
-			lightComponent->SetRadius(glm::linearRand(0.1f, 10.0f));
-			lightComponent->SetIntensity(glm::linearRand(1.0f, 2.0f));
-		}
+		Light::Sptr lightComponent1 = light1->Add<Light>();
+		lightComponent1->SetColor(glm::vec3(0.0f,1.0f,0.0f));
+		lightComponent1->SetRadius(50.0f);
+		lightComponent1->SetIntensity(548.0f);
+
+
+		GameObject::Sptr light2 = scene->CreateGameObject("Light2");
+		light2->SetPostion(glm::vec3(1.793f,-45.300f,1.0f));
+
+
+		Light::Sptr lightComponent2 = light2->Add<Light>();
+		lightComponent2->SetColor((glm::vec3(1.0f, 0.0f,0.0f)));
+		lightComponent2->SetRadius(10.0f);
+		lightComponent2->SetIntensity(190.0f);
+
+
+		GameObject::Sptr light3 = scene->CreateGameObject("Light3");
+		light3->SetPostion(glm::vec3(glm::diskRand(25.0f), 1.0f));
+
+
+		Light::Sptr lightComponent3 = light3->Add<Light>();
+		lightComponent3->SetColor(glm::linearRand(glm::vec3(0.0f), glm::vec3(1.0f)));
+		lightComponent3->SetRadius(glm::linearRand(0.1f, 10.0f));
+		lightComponent3->SetIntensity(glm::linearRand(1.0f, 2.0f));
+
+		GameObject::Sptr light4 = scene->CreateGameObject("Light4");
+		light4->SetPostion(glm::vec3(glm::diskRand(25.0f), 1.0f));
+
+
+		Light::Sptr lightComponent4 = light4->Add<Light>();
+		lightComponent4->SetColor(glm::linearRand(glm::vec3(0.0f), glm::vec3(1.0f)));
+		lightComponent4->SetRadius(glm::linearRand(0.1f, 10.0f));
+		lightComponent4->SetIntensity(glm::linearRand(1.0f, 2.0f));
+		
 
 		// We'll create a mesh that is a simple plane that we can resize later
 		MeshResource::Sptr planeMesh = ResourceManager::CreateAsset<MeshResource>();
