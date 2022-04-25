@@ -50,14 +50,16 @@ void CalcPointLightContribution(vec3 viewPos, vec3 normal, Light light, float sh
         // We add the one to prevent divide by zero errors
         float attenuation = clamp(1.0 / (1.0 + light.ColorAttenuation.w * pow(dist, 2)), 0, 256);
 
-        // Dot product between normal and light
-        float NdotL = max(dot(normal, lightDir), 0.0);
-        diffuse += NdotL * attenuation * light.PositionIntensity.w * light.ColorAttenuation.rgb;
+            // Dot product between normal and light
+            float NdotL = max(dot(normal, lightDir), 0.0);
+            diffuse += NdotL * attenuation * light.PositionIntensity.w * light.ColorAttenuation.rgb;
+
+
+            vec3 reflectDir = reflect(lightDir, normal);
+            float VdotR = pow(max(dot(normalize(-viewPos), reflectDir), 0.0), pow(2, shininess * 8));
         
-        vec3 reflectDir = reflect(lightDir, normal);
-        float VdotR = pow(max(dot(normalize(-viewPos), reflectDir), 0.0), pow(2, shininess * 8));
+            specular += VdotR * light.ColorAttenuation.rgb * shininess * attenuation * light.PositionIntensity.w;
         
-        specular += VdotR * light.ColorAttenuation.rgb * shininess * attenuation * light.PositionIntensity.w;
 }
 
 void main() {
@@ -80,6 +82,20 @@ void main() {
         CalcPointLightContribution(viewPos, normal, Lights[ix], specularPow, diffuse, specular);
     }
 
-    outDiffuse = vec4(diffuse, 1);
-    outSpecular = vec4(specular, 1);
+    
+    if (u_Toggle == 0) //Everything
+    {
+        outDiffuse = vec4(diffuse, 1);
+        outSpecular = vec4(specular, 1);
+    }
+    else if (u_Toggle == 1) //Just Diffuse
+    {
+        outDiffuse = vec4(diffuse, 1);
+        outSpecular = vec4(0,0,0,1);
+    }
+    else if (u_Toggle == 2) //Just Specular
+    {
+        outDiffuse = vec4(0,0,0,1);
+        outSpecular = vec4(specular, 1);
+    } 
 }

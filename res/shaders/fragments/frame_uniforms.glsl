@@ -21,6 +21,10 @@ layout (std140, binding = 0) uniform b_FrameLevelUniforms {
     // Camera's far plane
     uniform float u_ZFar;
     
+
+    //Lighting Toggles
+	uniform int u_Toggle;
+
     // NEW FOR DOF
 
     // Distance to focus camera to in world units
@@ -32,6 +36,7 @@ layout (std140, binding = 0) uniform b_FrameLevelUniforms {
 
     // New for fun, the viewport rectangle on the output (x, y, w, h)
     uniform vec4 u_Viewport;
+
 
 };
 

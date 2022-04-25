@@ -8,6 +8,8 @@
 #include "PostProcessing/BoxFilter5x5.h"
 #include "PostProcessing/OutlineEffect.h"
 #include "PostProcessing/DepthOfField.h"
+#include "PostProcessing/FilmGrain.h"
+
 
 PostProcessingLayer::PostProcessingLayer() :
 	ApplicationLayer()
@@ -15,18 +17,18 @@ PostProcessingLayer::PostProcessingLayer() :
 	Name = "Post Processing";
 	Overrides =
 		AppLayerFunctions::OnAppLoad |
-		AppLayerFunctions::OnSceneLoad | AppLayerFunctions::OnSceneUnload | 
+		AppLayerFunctions::OnSceneLoad | AppLayerFunctions::OnSceneUnload |
 		AppLayerFunctions::OnPostRender |
 		AppLayerFunctions::OnWindowResize;
 }
 
 PostProcessingLayer::~PostProcessingLayer() = default;
 
-void PostProcessingLayer::AddEffect(const Effect::Sptr& effect) {
+void PostProcessingLayer::AddEffect(const Effect::Sptr & effect) {
 	_effects.push_back(effect);
-}
+} 
 
-void PostProcessingLayer::OnAppLoad(const nlohmann::json& config)
+void PostProcessingLayer::OnAppLoad(const nlohmann::json & config)
 {
 	// Loads some effects in
 	_effects.push_back(std::make_shared<ColorCorrectionEffect>());
@@ -34,6 +36,7 @@ void PostProcessingLayer::OnAppLoad(const nlohmann::json& config)
 	_effects.push_back(std::make_shared<BoxFilter5x5>());
 	_effects.push_back(std::make_shared<OutlineEffect>());
 	_effects.push_back(std::make_shared<DepthOfField>());
+	_effects.push_back(std::make_shared<FilmGrain>());
 
 	GetEffect<OutlineEffect>()->Enabled = false;
 
@@ -43,7 +46,7 @@ void PostProcessingLayer::OnAppLoad(const nlohmann::json& config)
 	// Initialize all the effect's output FBOs (inefficient) 
 	for (const auto& effect : _effects) {
 		FramebufferDescriptor fboDesc = FramebufferDescriptor();
-		fboDesc.Width  = viewport.z * effect->_outputScale.x;
+		fboDesc.Width = viewport.z * effect->_outputScale.x;
 		fboDesc.Height = viewport.w * effect->_outputScale.y;
 		fboDesc.RenderTargets[RenderTargetAttachment::Color0] = RenderTargetDescriptor(effect->_format);
 
@@ -62,7 +65,7 @@ void PostProcessingLayer::OnAppLoad(const nlohmann::json& config)
 	_quadVAO = VertexArrayObject::Create();
 	_quadVAO->AddVertexBuffer(vbo, {
 		BufferAttribute(0, 2, AttributeType::Float, sizeof(glm::vec2), 0, AttribUsage::Position)
-	});
+		});
 }
 
 void PostProcessingLayer::OnPostRender()
@@ -148,7 +151,7 @@ void PostProcessingLayer::OnSceneUnload()
 	}
 }
 
-void PostProcessingLayer::OnWindowResize(const glm::ivec2& oldSize, const glm::ivec2& newSize)
+void PostProcessingLayer::OnWindowResize(const glm::ivec2 & oldSize, const glm::ivec2 & newSize)
 {
 	for (const auto& effect : _effects) {
 		effect->OnWindowResize(oldSize, newSize);

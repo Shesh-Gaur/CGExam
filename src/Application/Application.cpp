@@ -264,7 +264,7 @@ void Application::_RegisterClasses()
 	ResourceManager::RegisterType<Font>();
 	ResourceManager::RegisterType<Framebuffer>();
 
-	// Register all of our component types so we can load them from files
+	// Register all of our component types so we can load them from files 
 	ComponentManager::RegisterType<Camera>();
 	ComponentManager::RegisterType<RenderComponent>();
 	ComponentManager::RegisterType<RigidBody>();
