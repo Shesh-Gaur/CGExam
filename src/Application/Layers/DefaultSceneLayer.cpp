@@ -190,7 +190,8 @@ void DefaultSceneLayer::_CreateScene()
 		toonLut->SetWrap(WrapMode::ClampToEdge);
 
 		// Here we'll load in the cubemap, as well as a special shader to handle drawing the skybox
-		TextureCube::Sptr testCubemap = ResourceManager::CreateAsset<TextureCube>("cubemaps/ocean/ocean.jpg");
+		TextureCube::Sptr testCubemap = ResourceManager::CreateAsset<TextureCube>("cubemaps/custom/custom.jpg");
+
 		ShaderProgram::Sptr      skyboxShader = ResourceManager::CreateAsset<ShaderProgram>(std::unordered_map<ShaderPartType, std::string>{
 			{ ShaderPartType::Vertex, "shaders/vertex_shaders/skybox_vert.glsl" },
 			{ ShaderPartType::Fragment, "shaders/fragment_shaders/skybox_frag.glsl" }
@@ -331,24 +332,45 @@ void DefaultSceneLayer::_CreateScene()
 			multiTextureMat->Set("u_Scale", 0.1f);
 		}
 
+		Material::Sptr pillarMat = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			pillarMat->Name = "Polka";
+			pillarMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/PillarUV.png"));
+			pillarMat->Set("u_Material.Specular", solidBlackTex);
+			pillarMat->Set("u_Material.NormalMap", normalMapDefault);
+			//pillarMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/polka.png"));
+		}
+
+		Material::Sptr rockMat = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			rockMat->Name = "Polka";
+			rockMat->Set("u_Material.AlbedoMap", ResourceManager::CreateAsset<Texture2D>("textures/Stone.png"));
+			rockMat->Set("u_Material.Specular", solidBlackTex);
+			rockMat->Set("u_Material.NormalMap", ResourceManager::CreateAsset<Texture2D>("textures/stoneNormal.png"));
+			//pillarMat->Set("u_Material.EmissiveMap", ResourceManager::CreateAsset<Texture2D>("textures/polka.png"));
+		}
+
+
+
+
 		// Create some lights for our scene
-	
+
 		GameObject::Sptr light1 = scene->CreateGameObject("Light");
 		light1->SetPostion(glm::vec3(-4.74f, 44.94f, 1.0f));
 
 
 		Light::Sptr lightComponent1 = light1->Add<Light>();
-		lightComponent1->SetColor(glm::vec3(0.0f,1.0f,0.0f));
+		lightComponent1->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
 		lightComponent1->SetRadius(50.0f);
 		lightComponent1->SetIntensity(149.0f);
 
 
 		GameObject::Sptr light2 = scene->CreateGameObject("Light2");
-		light2->SetPostion(glm::vec3(1.793f,-45.300f,1.0f));
+		light2->SetPostion(glm::vec3(1.793f, -45.300f, 1.0f));
 
 
 		Light::Sptr lightComponent2 = light2->Add<Light>();
-		lightComponent2->SetColor((glm::vec3(1.0f, 0.0f,0.0f)));
+		lightComponent2->SetColor((glm::vec3(1.0f, 0.0f, 0.0f)));
 		lightComponent2->SetRadius(10.0f);
 		lightComponent2->SetIntensity(50.0f);
 
@@ -467,6 +489,27 @@ void DefaultSceneLayer::_CreateScene()
 
 
 		}
+
+
+		// Set up all our sample objects
+		GameObject::Sptr rocks = scene->CreateGameObject("Rocks");
+		{
+
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = rocks->Add<RenderComponent>();
+			renderer->SetMesh(rockMesh);
+			renderer->SetMaterial(rockMat);
+		}
+
+		GameObject::Sptr pillar = scene->CreateGameObject("Pillar");
+		{
+			// Create and attach a RenderComponent to the object to draw our mesh
+			RenderComponent::Sptr renderer = pillar->Add<RenderComponent>();
+			renderer->SetMesh(pillarMesh);
+			renderer->SetMaterial(pillarMat);
+		}
+
+
 
 		//GameObject::Sptr ship = scene->CreateGameObject("Fenrir");
 		//{
